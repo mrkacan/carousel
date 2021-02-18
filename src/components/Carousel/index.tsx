@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import LoadingIndicator from "../LoadingIndicator";
 import CarouselItem from "./components/CarouselItem";
 import {motion} from "framer-motion"
+import CarouselNavigator from "./components/CarouselNavigator";
 
 interface Props {
     width: number,
@@ -31,11 +32,11 @@ const Carousel: React.FC<Props> = ({
 
     const getActiveIndexPosition = (): number => {
 
-        if(activeIndex === 0){
+        if (activeIndex === 0) {
             return itemWidth
         }
 
-        return ((activeIndex -1) * (itemWidth))*-1
+        return ((activeIndex - 1) * (itemWidth)) * -1
     }
 
     const itemWidth = width / column;
@@ -77,22 +78,7 @@ const Carousel: React.FC<Props> = ({
                 })
             }
         </motion.div>
-        <div className="flex flex-row justify-center mt-6 mb-6">
-            <div className="inline-flex">
-                <button
-                    onClick={showPreviousSlide}
-                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-                >
-                    Prev
-                </button>
-                <button
-                    onClick={showNextSlide}
-                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
-                >
-                    Next
-                </button>
-            </div>
-        </div>
+        <CarouselNavigator showPreviousSlide={showPreviousSlide} showNextSlide={showNextSlide}/>
     </div>)
 
 }

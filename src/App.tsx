@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {SetStateAction, useEffect, useState} from 'react';
 import './App.css';
+import {getCarouselItems} from './common/services';
+import Carousel from "./components/Carousel";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App: React.FC<any> = () => {
+    const [isLoading, setIsLoading] = useState(true)
+    const [carouselItems, setCarouselItems] = useState([])
+
+    useEffect(() => {
+        const getItems = async (): Promise<SetStateAction<any>> => {
+            const items: any = await getCarouselItems()
+            setCarouselItems(items)
+            setIsLoading(false)
+        }
+
+        getItems()
+    }, [])
+
+    return (<div className="App">
+        <div className="app-container">
+            <Carousel
+                loading={isLoading}
+                width={900}
+                column={3}
+                items={carouselItems}
+            />
+
+        </div>
+    </div>)
 }
+
 
 export default App;
